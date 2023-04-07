@@ -77,173 +77,122 @@ useful for debugging purposes.
         00 MPI_REQUEST_NULL
         .. reserved
   ...... reserved
-1 is datatype
- 0 simple fixed-size types
-  000  1 byte
-     0 C and C++
-      0000 C int8_t
-      0001 C uint8_t
-      0010 C (real 8b)
-      0011 reserved
-      0100 C signed character
-      0101 C unsigned character
-      0110 C bool
-      0111 C++ bool
-      1... reserved
-     1 Fortran and other
-      0000 F integer*1
-      0001 F (logical*1)
-      0010 F (real*1)
-      .... reserved
-      1111 MPI_BYTE
-  001  2 bytes
-     0 C and C++
-      0000 C int16_t
-      0001 C uint16_t
-      0010 C (real 16b)
-      0011 C (complex 16b)
-      0... reserved
-      0111 C++ (complex 16b)
-      1... reserved
-     1 Fortran and other
-      0000 F integer*2
-      0001 F (logical*2)
-      0010 F real*2
-      0011 F (complex*2)
-      .... reserved
-  010  4 bytes
-     0 C and C++
-      0000 C int32_t
-      0001 C uint32_t
-      0010 C float
-      0011 C (complex half)
-      0... reserved
-      0111 C++ (complex half)
-      1... reserved
-     1 Fortran and other
-      0000 F integer*4
-      0001 F (logical*4)
-      0010 F real*4
-      0011 F complex*4
-      .... reserved
-  011  8 bytes
-     0 C and C++
-      0000 C int32_t
-      0001 C uint32_t
-      0010 C double
-      0011 C (complex float)
-      0... reserved
-      0111 C++ (complex float)
-      1... reserved
-     1 Fortran and other
-      0000 F integer*8
-      0001 F (logical*8)
-      0010 F real*8
-      0011 F complex*8
-      .... reserved
-  100 16 bytes
-     0 C and C++
-      0000 C (int128_t)
-      0001 C (uint128_t)
-      0010 C (float128_t)
-      0011 C complex double
-      0... reserved
-      0111 C++ complex double
-      1... reserved
-     1 Fortran and other
-      0000 F integer*16
-      0001 reserved
-      0010 F real*16
-      0011 F complex*16
-      .... reserved
-  101 32 bytes
-     0 C and C++
-      .... reserved
-     1 Fortran and other
-      .... reserved
-      0011 F complex*32
-      .... reserved
-  110 reserved
-     ..... reserved
-  111 reserved
-     ..... reserved
- 1 other types
-  0 language defaults - these may not be necessary, i.e. can/should be aliases to fixed-size types
-   0 C integers
-    000 C short
-       ... log2(size in bytes)
-    001 C int
-       ... log2(size in bytes)
-    010 C long
-       ... log2(size in bytes)
-    011 C long long
-       ... log2(size in bytes)
-    100 C unsigned short
-       ... log2(size in bytes)
-    101 C unsigned int
-       ... log2(size in bytes)
-    110 C unsigned long
-       ... log2(size in bytes)
-    111 C unsigned long long
-       ... log2(size in bytes)
-   1 other
-    0 Fortran default types
-     00 F integer
-       ... log2(size in bytes)
-     01 F logical
-       ... log2(size in bytes)
-     10 F real
-       ... log2(size in bytes)
-     11 F complex
-       ... log2(size in bytes)
-    1 other
-     00000 wchar_t
-     00001 MPI_LB (deleted)
-     00010 MPI_UB (deleted)
-     ..... reserved
-  1 other
-   0 language-independent types
-    0000 special integer types
-        00 MPI_AINT
-        01 MPI_COUNT
-        10 MPI_OFFSET
-        11 reserved
-    0001 other
-        00 MPI_PACKED
-        01 MPI_DATATYPE_NULL
-        .. reserved
-    .... reserved
-        .. reserved
-   1 other
-    0 pair types
-     00 C pair types
-       000 MPI_FLOAT_INT
-       001 MPI_DOUBLE_INT
-       010 MPI_LONG_INT
-       011 MPI_2INT
-       100 MPI_SHORT_INT
-       101 MPI_LONG_DOUBLE_INT
-       110 reserved
-       111 reserved
-     01 F pair types
-       000 MPI_2REAL
-       001 MPI_2DOUBLE_PRECISION
-       010 MPI_2INTEGER
-       ... reserved
-     .. reserved
-       ... reserved
-    1 other
-     00 long double
-       0 real
-        00 C
-        01 C++
-        10 F
-        11 reserved
-       1 complex
-        00 C
-        01 C++
-        10 F
-        11 reserved
-     .. reserved
-       ... reserved
+1 is datatype -- See table below
 ```
+
+| Datatype Flag | SizeField | ID     |                       |
+|---------------|------|--------|-----------------------|
+| 1             | 000  | 000000 | int8_t                |
+| 1             | 000  | 000001 | uint8_t               |
+| 1             | 000  | 000010 | F integer*1           |
+| 1             | 000  | 000011 | C float8              |
+| 1             | 000  | 000100 | F real*1              |
+| 1             | 000  | 000101 | F logical*1           |
+| 1             | 000  | 000110 | C bool                |
+| 1             | 000  | 000111 | signed char           |
+| 1             | 000  | 001000 | unsigned char         |
+| 1             | 000  | 001001 | C++ bool              |
+| 1             | 000  | 001010 |                       |
+| 1             | 000  | 001011 |                       |
+| 1             | 000  | 001100 |                       |
+| 1             | 000  | 001101 |                       |
+| 1             | 000  | 001110 |                       |
+| 1             | 000  | 001111 |                       |
+| 1             | 001  | 000000 | int16_t               |
+| 1             | 001  | 000001 | uint16_t              |
+| 1             | 001  | 000010 | F integer*2           |
+| 1             | 001  | 000011 | C real16              |
+| 1             | 001  | 000100 | F real*2              |
+| 1             | 001  | 000101 | F logical*2           |
+| 1             | 001  | 000110 | C complex8            |
+| 1             | 001  | 000111 | C++ complex8          |
+| 1             | 001  | 001000 | F complex*1           |
+| 1             | 001  | 001001 |                       |
+| 1             | 001  | 001010 |                       |
+| 1             | 001  | 001011 |                       |
+| 1             | 001  | 001100 |                       |
+| 1             | 001  | 001101 |                       |
+| 1             | 001  | 001110 |                       |
+| 1             | 001  | 001111 |                       |
+| 1             | 010  | 000000 | int32_t               |
+| 1             | 010  | 000001 | uint32_t              |
+| 1             | 010  | 000010 | F integer*4           |
+| 1             | 010  | 000011 | C real32              |
+| 1             | 010  | 000100 | F real*4              |
+| 1             | 010  | 000101 | F logical*4           |
+| 1             | 010  | 000110 | C complex half        |
+| 1             | 010  | 000111 | C++ complex half      |
+| 1             | 010  | 001000 | F complex*2           |
+| 1             | 010  | 001001 |                       |
+| 1             | 010  | 001010 |                       |
+| 1             | 010  | 001011 |                       |
+| 1             | 010  | 001100 |                       |
+| 1             | 010  | 001101 |                       |
+| 1             | 010  | 001110 |                       |
+| 1             | 010  | 001111 |                       |
+| 1             | 011  | 000000 | int64_t               |
+| 1             | 011  | 000001 | uint64_t              |
+| 1             | 011  | 000010 | F integer*8           |
+| 1             | 011  | 000011 | C real64              |
+| 1             | 011  | 000100 | F real*8              |
+| 1             | 011  | 000101 | F logical*8           |
+| 1             | 011  | 000110 | C complex float       |
+| 1             | 011  | 000111 | C++ complex float     |
+| 1             | 011  | 001000 | F complex*4           |
+| 1             | 011  | 001001 |                       |
+| 1             | 011  | 001010 |                       |
+| 1             | 011  | 001011 |                       |
+| 1             | 011  | 001100 |                       |
+| 1             | 011  | 001101 |                       |
+| 1             | 011  | 001110 |                       |
+| 1             | 011  | 001111 |                       |
+| 1             | 100  | 000000 | int128_t              |
+| 1             | 100  | 000001 | uint128_t             |
+| 1             | 100  | 000010 | F integer*16          |
+| 1             | 100  | 000011 | F real*16             |
+| 1             | 100  | 000100 | F logical*16          |
+| 1             | 100  | 000101 | C complex double      |
+| 1             | 100  | 000110 | C++ complex double    |
+| 1             | 100  | 000111 | F complex*8           |
+| 1             | 100  | 001000 |                       |
+| 1             | 100  | 001001 |                       |
+| 1             | 100  | 001010 |                       |
+| 1             | 100  | 001011 |                       |
+| 1             | 100  | 001100 |                       |
+| 1             | 100  | 001101 |                       |
+| 1             | 100  | 001110 |                       |
+| 1             | 100  | 001111 |                       |
+| 1             | 101  | 000000 | F complex*32          |
+| 1             | 101  | ...... | reserved              |
+| 1             | 110  | ...... | reserved              |
+| 1             | 111  | 000000 | MPI_PACKED            |
+| 1             | 111  | 000001 | MPI_DATATYPE_NULL     |
+| 1             | 111  | 000010 | MPI_FLOAT_INT         |
+| 1             | 111  | 000011 | MPI_DOUBLE_INT        |
+| 1             | 111  | 000100 | MPI_LONG_INT          |
+| 1             | 111  | 000101 | MPI_2INT              |
+| 1             | 111  | 000110 | MPI_SHORT_INT         |
+| 1             | 111  | 000111 | MPI_LONG_DOUBLE_INT   |
+| 1             | 111  | 001000 | MPI_2REAL             |
+| 1             | 111  | 001001 | MPI_2DOUBLE_PRECISION |
+| 1             | 111  | 001010 | MPI_2INTEGER          |
+| 1             | 111  | 001011 | short                 |
+| 1             | 111  | 001100 | int                   |
+| 1             | 111  | 001101 | long                  |
+| 1             | 111  | 001110 | unsigned short        |
+| 1             | 111  | 001111 | unsigned int          |
+| 1             | 111  | 010000 | unsigned long         |
+| 1             | 111  | 010001 | unsigned long long    |
+| 1             | 111  | 010010 | F integer             |
+| 1             | 111  | 010011 | MPI_AINT              |
+| 1             | 111  | 010100 | MPI_COUNT             |
+| 1             | 111  | 010101 | MPI_OFFSET            |
+| 1             | 111  | 010110 | F real                |
+| 1             | 111  | 010111 | F complex             |
+| 1             | 111  | 011000 | F logical             |
+
+Empty fields are reserved. The SizeField is the log2 of the size (except for `111`). The lookup table entry of the type can found as (16\*SizeField)+ID, except for types with SizeField `111` where currently a factor of (16\*5)+ID is used. I deliberately used `111`  for the platform-dependent types but that could be changed if we don't feel like we need the sizes `101` and `110` reserved. 
+
+Error-checking can be done with some clever bit masks and range queries. I tried to group integer, floating point, complex, and logical, types to make such queries easier. I don't really care about optimizing that though. 
+
+We have 71 entries (if I counted right) that could easily be put into a lookup table. Given the compact representation with 5 size groups, we could even put the datatype objects into a lookup table of a few dozen KB to save one indirection. There is ample space for future extensions in each of these groups.
